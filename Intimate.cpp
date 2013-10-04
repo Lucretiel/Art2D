@@ -4,7 +4,7 @@
 #include "rand.h"
 #include <vector>
 
-class Monumental : public Simulation
+class Intimate : public Simulation
 {
 	struct PlaneGroup
 	{
@@ -13,7 +13,7 @@ class Monumental : public Simulation
 
 	std::vector<PlaneGroup> planes;
 
-	std::string title() override {return "Monumental";}
+	std::string title() override {return "Intimate";}
 
 	template<class Shape>
 	sf::ConvexShape convertRectToConvex(const Shape& base, const VanishPlane& plane)
@@ -32,14 +32,14 @@ class Monumental : public Simulation
 	void initialize() override
 	{
 		const float max_depth = 6000;
-		const float min_depth = 0;
+		const float min_depth = -300;
 		const unsigned num_planes = 75;
 		const unsigned rects_per_plane = 10;
 		const float interval = ((max_depth - min_depth) / num_planes);
 		const auto center = windowHalfDimensions();
 		const auto dimensions = windowDimensions();
 
-		auto plane = VanishPlane::backPlane(sf::Vector2f(center.x, center.y*1.2), 0);
+		auto plane = VanishPlane::backPlane(sf::Vector2f(center.x, center.y*1.75), 0);
 		planes.reserve(num_planes);
 
 		const sf::Vector2f rect_size(50, 250);
@@ -66,12 +66,12 @@ class Monumental : public Simulation
 			auto& rects = planes.back().rects;
 			rects.reserve(rects_per_plane);
 
-			if(n_plane == int(num_planes*.6))
+			if(n_plane == int(num_planes*.8))
 			{
-				const sf::Vector2f mighty_size(2000, 20000);
+				const sf::Vector2f mighty_size(2000, 200000);
 				sf::RectangleShape mighty(mighty_size);
 				mighty.setOrigin(mighty_size.x / 2, mighty_size.y);
-				mighty.setPosition(center.x * 10, dimensions.y);
+				mighty.setPosition(center.x * 30, dimensions.y);
 				mighty.setFillColor(sf::Color::Black);
 				mighty.setOutlineColor(sf::Color::White);
 				rects.push_back(convertRectToConvex(mighty, plane));
@@ -102,4 +102,4 @@ class Monumental : public Simulation
 };
 
 #include "TypeRegistry.h"
-REGISTER_SIMULATION(Monumental, "monumental");
+REGISTER_SIMULATION(Intimate, "intimate");
