@@ -11,3 +11,12 @@
 *.lai
 *.la
 *.a
+
+Release
+Debug
+
+# Visual Studio
+*.sdf
+*.sln
+*.suo
+*.vcxproj*
