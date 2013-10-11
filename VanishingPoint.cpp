@@ -1,6 +1,6 @@
 #include "VanishingPoint.h"
 
-#include "TypeRegistry.h"
+
 REGISTER_SIMULATION(VanishingPoint, "vanishing");
 
 #include "rand.h"

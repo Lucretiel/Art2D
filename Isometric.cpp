@@ -1,6 +1,6 @@
 #include "Isometric.h"
 
-#include "TypeRegistry.h"
+
 REGISTER_SIMULATION(Isometric, "isometric");
 
 #include "helpers.h"

@@ -2,7 +2,7 @@
 #include <algorithm>
 
 #include "Simulation.h"
-#include "TypeRegistry.h"
+
 #include "helpers.h"
 #include "rand.h"
 

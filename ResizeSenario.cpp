@@ -1,7 +1,7 @@
 #include "ResizeSenario.h"
 
 #include <algorithm>
-#include "TypeRegistry.h"
+
 #include "helpers.h"
 #include "rand.h"
 

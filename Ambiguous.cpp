@@ -1,6 +1,5 @@
 #include "Ambiguous.h"
 
-#include "TypeRegistry.h"
 REGISTER_SIMULATION(Ambiguous, "ambiguous");
 
 #include "helpers.h"

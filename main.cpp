@@ -1,8 +1,9 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <memory>
 
-#include "TypeRegistry.h"
+
 #include "Simulation.h"
 
 int main(int nargs, char* args[])
@@ -17,7 +18,7 @@ int main(int nargs, char* args[])
 			reset = false;
 			try
 			{
-				auto sim = MAKE_TYPE(Simulation, *it);
+				std::unique_ptr<Simulation> sim(MAKE_TYPE(Simulations, *it));
 				if(sim)
 					sim->execute();
 			}

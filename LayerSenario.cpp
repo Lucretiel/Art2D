@@ -2,7 +2,7 @@
 
 #include "helpers.h"
 #include "rand.h"
-#include "TypeRegistry.h"
+
 
 REGISTER_SIMULATION(LayerSenario, "layer");
 

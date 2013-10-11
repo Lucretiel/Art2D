@@ -101,5 +101,5 @@ class Intimate : public Simulation
 
 };
 
-#include "TypeRegistry.h"
+
 REGISTER_SIMULATION(Intimate, "intimate");

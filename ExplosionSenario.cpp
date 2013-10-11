@@ -2,7 +2,7 @@
 #include "rand.h"
 #include "helpers.h"
 
-#include "TypeRegistry.h"
+
 
 const static b2Vec2 boom_center(50, 95);
 const static double boom_factor = 1000000;

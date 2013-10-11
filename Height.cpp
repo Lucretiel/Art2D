@@ -1,5 +1,5 @@
 #include "Height.h"
-#include "TypeRegistry.h"
+
 #include "helpers.h"
 #include "rand.h"
 

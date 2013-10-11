@@ -1,7 +1,7 @@
 #include "TrivialSenario.h"
 
 #include "helpers.h"
-#include "TypeRegistry.h"
+
 
 REGISTER_SIMULATION(TrivialSenario, "trivial");
 

@@ -1,5 +1,4 @@
 #include "Simulation.h"
-#include "TypeRegistry.h"
 #include "rand.h"
 #include "helpers.h"
 

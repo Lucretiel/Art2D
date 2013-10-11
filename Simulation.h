@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <iterator>
 #include <SFML/Graphics.hpp>
+#include <CPPRegistry/CPPRegistry.h>
 #include "EnclosedWorld.h"
 
 struct InitParams
@@ -156,7 +157,15 @@ protected:
 					drawShape(object, color, outline, thickness);
 				}
 				break;
-				//TODO: add other types here
+			case b2Shape::e_edge:
+				{
+					auto shape = static_cast<b2EdgeShape*>(fixture->GetShape());
+					sf::ConvexShape object(2);
+					object.setPoint(0, pointTransform(convertVector(shape->m_vertex1, xf, m_simParams.factor)));
+					object.setPoint(0, pointTransform(convertVector(shape->m_vertex2, xf, m_simParams.factor)));
+					drawShape(object, color, outline, thickness);
+				}
+				break;
 			}
 		}
 	}
@@ -167,9 +176,8 @@ protected:
 		const sf::Color& outline = sf::Color::Transparent,
 		const float thickness=2)
 	{
-		auto end = std::end(container);
-		for(auto it = std::begin(container); it != end; ++it)
-			drawBody(**it, pointTransform, color, outline, thickness);
+		for(auto& body : container)
+			drawBody(*body, pointTransform, color, outline, thickness);
 	}
 
 	template<class Transform>
@@ -218,4 +226,7 @@ protected:
 	const SimParams& simParams() {return m_simParams;}
 };
 
-#define REGISTER_SIMULATION(BASE, NAME) REGISTER_TYPE(Simulation, BASE, NAME)
+TYPE_REGISTRY(Simulations, Simulation);
+
+#define REGISTER_SIMULATION(TYPE, NAME) REGISTER_TYPE(Simulations, TYPE, NAME)
+#define SIM(TYPE, NAME) REGISTERED_TYPE(Simulations, TYPE, NAME): public Simulation

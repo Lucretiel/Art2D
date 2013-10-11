@@ -101,5 +101,5 @@ class Monumental : public Simulation
 
 };
 
-#include "TypeRegistry.h"
+
 REGISTER_SIMULATION(Monumental, "monumental");

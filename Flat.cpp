@@ -3,7 +3,6 @@
 #include "helpers.h"
 #include "rand.h"
 
-#include "TypeRegistry.h"
 REGISTER_SIMULATION(Flat, "flat");
 
 sf::Vector2f noShift(const sf::Vector2f& p)

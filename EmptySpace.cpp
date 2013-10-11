@@ -3,7 +3,6 @@
 #include "helpers.h"
 #include "rand.h"
 
-#include "TypeRegistry.h"
 #include <iostream>
 REGISTER_SIMULATION(EmptySpace, "empty");
 

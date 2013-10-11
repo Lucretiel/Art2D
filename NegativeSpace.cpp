@@ -82,5 +82,5 @@ class NegativeSpace : public Simulation
 	}
 };
 
-#include "TypeRegistry.h"
+
 REGISTER_SIMULATION(NegativeSpace, "negative");

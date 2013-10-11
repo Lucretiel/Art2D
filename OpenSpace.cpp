@@ -1,6 +1,6 @@
 #include "OpenSpace.h"
 
-#include "TypeRegistry.h"
+
 
 #include "helpers.h"
 #include "rand.h"

@@ -63,5 +63,5 @@ class Tension : public Simulation
 
 };
 
-#include "TypeRegistry.h"
+
 REGISTER_SIMULATION(Tension, "tension");

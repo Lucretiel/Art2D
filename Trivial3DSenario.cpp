@@ -1,6 +1,6 @@
 #include "Trivial3DSenario.h"
 
-#include "TypeRegistry.h"
+
 REGISTER_SIMULATION(Trivial3DSenario, "trivial3d");
 
 #include "helpers.h"
