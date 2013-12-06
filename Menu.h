@@ -45,4 +45,13 @@ public:
 		item(i);
 		return static_menu(rest...);
 	}
+
+	template<class Container, class Helper>
+	auto dynamic_menu(const Container& container, Helper&& helper) -> decltype((container.front()))
+	{
+		for(const auto& i : container)
+			item(helper(i));
+		int selection = pick();
+		return container[selection-1];
+	}
 };

@@ -136,7 +136,37 @@ void Tour::build()
 			.piece("Soft Color", "soft")
 			.piece("Warm Color", "warm")
 			.piece("Cool Color", "cool")
-			.piece("Intense Color", "intense");
+			.piece("Intense Color", "intense")
+
+			.section("Color 2",
+			"No comments. This was a reapplication of the ideas from the previous\n"
+			"project.")
+			.piece("Vibrating", "vibrating")
+			.piece("Changing Greys", "changing-greys")
+
+			.section("Light",
+			"Again, this was a reapplication of the color ideas- four identical\n"
+			"compositions, each with a different set of colors. It was especially\n"
+			"important for this one that they all be the same setting, because the\n"
+			"forms in my work don't have a native concept of color. By having these\n"
+			"images together, the viewer can tell that they are supposed to be the\n"
+			"same setup in different lighting conditions. The major technical\n"
+			"challenges for this one were getting the light and color to blend\n"
+			"correctly, and getting the shadow layering to work.")
+			.piece("Local Color", "local")
+			.piece("Warm Light", "warm-light")
+			.piece("Cool Light", "cool-light")
+			.piece("Subjective Color", "subjective")
+
+			.section("Composition 2",
+			"This was a refreshing return to form for me, after the trouble I had\n"
+			"with color. Unfortunatly, because I immediatly snapped back into my\n"
+			"comfort zone with this project, these are all very safe images, and\n"
+			"none of them I would say are my best work.")
+			.piece("Dissonance", "dissonance")
+			.piece("Harmony", "harmony")
+			.piece("Non-Heirarchical", "non-hierarchy")
+			.piece("Heirarchical", "hierarchy");
 }
 
 
@@ -214,7 +244,7 @@ void Tour::run_tour()
 			"Next Piece",
 			"Next Project",
 			"Show Help",
-			"Quit");
+			"Back");
 
 		switch(selection)
 		{
@@ -254,7 +284,57 @@ void Tour::run_tour()
 
 void Tour::run_specific()
 {
-	std::cout << "Sorry, this is still being worked on. Try the tour instead!\n\n";
+	int selection = menu.static_menu(
+		"Select from projects",
+		"Select from all pieces",
+		"Show help",
+		"Back");
+
+	switch (selection)
+	{
+	case 1:
+		{
+			std::cout << "Select Project:\n";
+			const Project& project = menu.dynamic_menu(port.projects, [](const Project& project)
+			{
+				return project.name;
+			});
+
+			std::cout << "Select Piece:\n";
+			const Piece& piece = menu.dynamic_menu(project.pieces, [](const Piece& piece)
+			{
+				return piece.name;
+			});
+
+			run_piece(piece.load_name);
+		}
+		break;
+	case 2:
+		{
+			std::vector<const Piece*> pieces;
+			for(const Project& project : port.projects)
+				for(const Piece& piece : project.pieces)
+					pieces.push_back(&piece);
+
+			std::sort(pieces.begin(), pieces.end(), [](const Piece* lhs, const Piece* rhs)
+			{
+				return lhs->name < rhs->name;
+			});
+
+			std::cout << "Select Piece:\n";
+			const Piece* piece = menu.dynamic_menu(pieces, [](const Piece* piece)
+			{
+				return piece->name;
+			});
+			run_piece(piece->load_name);
+		}
+		break;
+	case 3:
+		show_help();
+		break;
+	case 4:
+		return;
+	}
 }
 
 void Tour::show_intro()
