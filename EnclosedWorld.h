@@ -4,8 +4,10 @@
 
 class EnclosedWorld : public b2World
 {
-private:
+public:
+	//hmmm who made this public
 	std::array<b2Body*, 4> m_edges;
+private:
 	const b2Vec2 m_dimensions;
 
 	void setEdge(const unsigned index, bool active)
@@ -59,7 +61,7 @@ public:
 	void setRightEdge(bool setting) {setEdge(3, setting);}
 	void setAllEdges(bool setting)
 	{
-		for(int i = 0; i < m_edges.size(); ++i)
+		for(unsigned i = 0; i < m_edges.size(); ++i)
 			setEdge(i, setting);
 	}
 };

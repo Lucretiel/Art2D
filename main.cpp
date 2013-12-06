@@ -1,3 +1,4 @@
+/*
 #include <vector>
 #include <string>
 #include <iostream>
@@ -28,4 +29,14 @@ int main(int nargs, char* args[])
 			}
 		} while(reset);
 	}
+}
+*/
+
+#include "Tour.h"
+
+int main()
+{
+	Tour tour;
+	tour.run();
+	return 0;
 }

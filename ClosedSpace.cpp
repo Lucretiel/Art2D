@@ -72,4 +72,4 @@ class ClosedSpace : public Simulation
 
 };
 
-REGISTER_SIMULATION(ClosedSpace, "packed");
+REGISTER_SIMULATION(ClosedSpace, "closed");

@@ -25,6 +25,7 @@ Simulation::Simulation()
 	,m_progress(0)
 	,m_maxprogress(1)
 	,m_paused(false)
+	,shader(nullptr)
 {}
 
 void Simulation::setTopEdge(bool setting) {world().setTopEdge(setting);}
@@ -71,7 +72,7 @@ void Simulation::updateProgress()
 		rect.setFillColor(sf::Color::Black);
 
 		m_window->clear(m_backgroundColor);
-		m_window->draw(rect);
+		m_window->draw(rect, shader);
 		m_window->display();
 	}
 }
@@ -135,6 +136,12 @@ b2Vec2 Simulation::physicsHalfDimensions() const
 	auto dim = physicsDimensions();
 	return b2Vec2(dim.x / 2, dim.y / 2);
 }
+
+void Simulation::useShader(sf::Shader* shader)
+{
+	this->shader = shader;
+}
+
 
 void Simulation::execute()
 {

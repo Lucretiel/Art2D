@@ -62,6 +62,7 @@ private:
 	float m_maxprogress;
 	bool m_loading;
 	bool m_paused;
+	sf::Shader* shader;
 
 /////////////////////////////////////////////////////////////////////
 // Internal helper methods
@@ -120,6 +121,8 @@ protected:
 
 	void setAllEdges(bool setting);
 
+	bool is_paused() const {return m_paused;}
+
 	template<class Shape>
 	void drawShape(
 		Shape&& shape,
@@ -130,7 +133,7 @@ protected:
 		shape.setFillColor(color);
 		shape.setOutlineColor(outline);
 		shape.setOutlineThickness(thickness);
-		window().draw(shape);
+		window().draw(shape, shader);
 	}
 
 	//New PointTransform templates. Old versions retained for backwards compatibility.
@@ -160,14 +163,45 @@ protected:
 			case b2Shape::e_edge:
 				{
 					auto shape = static_cast<b2EdgeShape*>(fixture->GetShape());
-					sf::ConvexShape object(2);
-					object.setPoint(0, pointTransform(convertVector(shape->m_vertex1, xf, m_simParams.factor)));
-					object.setPoint(0, pointTransform(convertVector(shape->m_vertex2, xf, m_simParams.factor)));
+					std::array<sf::Vertex, 2> points;
+					points[0].position = pointTransform(convertVector(shape->m_vertex1, xf, m_simParams.factor));
+					points[1].position = pointTransform(convertVector(shape->m_vertex2, xf, m_simParams.factor));
+					points[0].color = color;
+					points[1].color = color;
+					window().draw(points.data(), points.size(), sf::PrimitiveType::Lines, shader);
+				}
+				break;
+			case b2Shape::e_circle:
+				{
+					b2CircleShape* shape = static_cast<b2CircleShape*>(fixture->GetShape());
+					auto radius = shape->m_radius * m_simParams.factor;
+					sf::CircleShape object(radius, 60);
+					object.setOrigin(radius, radius);
+					object.setPosition(pointTransform(convertVector(shape->m_p, xf, m_simParams.factor)));
 					drawShape(object, color, outline, thickness);
 				}
 				break;
 			}
+
 		}
+	}
+
+	//Old version retained for backwards compatibility
+	void drawBody(b2Body& body,
+		const sf::Color& color=sf::Color::Black,
+		const sf::Color& outline=sf::Color::Transparent,
+		const float thickness=2)
+	{
+		drawBody(body, &noTransform, color, outline, thickness);
+	}
+
+	template<class Container>
+	void drawBodies(const Container& container,
+		const sf::Color& color=sf::Color::Black,
+		const sf::Color& outline=sf::Color::Transparent,
+		const float thickness=2)
+	{
+		drawBodies(container, &noTransform, color, outline, thickness);
 	}
 
 	template<class Container, class Transform>
@@ -190,24 +224,6 @@ protected:
 			drawBody(*body, pointTransform, color, outline, thickness);
 	}
 
-	//Old version retained for backwards compatibility
-	void drawBody(b2Body& body,
-		const sf::Color& color=sf::Color::Black,
-		const sf::Color& outline=sf::Color::Transparent,
-		const float thickness=2)
-	{
-		drawBody(body, &noTransform, color, outline, thickness);
-	}
-
-	template<class Container>
-	void drawBodies(const Container& container,
-		const sf::Color& color=sf::Color::Black,
-		const sf::Color& outline=sf::Color::Transparent,
-		const float thickness=2)
-	{
-		drawBodies(container, &noTransform, color, outline, thickness);
-	}
-
 	//Update progress bar. Call in initialize()
 	void setProgress(float p);
 	void addProgress(float p);
@@ -224,6 +240,8 @@ protected:
 	EnclosedWorld& world() {return *m_world;}
 	sf::Color& background() {return m_backgroundColor;}
 	const SimParams& simParams() {return m_simParams;}
+
+	void useShader(sf::Shader* shader);
 };
 
 TYPE_REGISTRY(Simulations, Simulation);
