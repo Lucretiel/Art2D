@@ -228,9 +228,8 @@ void Tour::run_tour()
 	auto piece_info = [&]()
 	{
 		std::cout << "Piece: " << get_piece().name << "\n";
-		const std::string& help(get_piece().help);
-		if(!help.empty())
-			std::cout << "Additional controls:\n" << help << "\n\n";
+		if(!get_piece().help.empty())
+			std::cout << "Additional controls:\n" << get_piece().help << "\n\n";
 	};
 
 	project_info();
@@ -299,12 +298,16 @@ void Tour::run_specific()
 			{
 				return project.name;
 			});
+			std::cout << "\n" << "Project: " << project.name << "\n" << project.description << "\n\n";
 
 			std::cout << "Select Piece:\n";
 			const Piece& piece = menu.dynamic_menu(project.pieces, [](const Piece& piece)
 			{
 				return piece.name;
 			});
+			std::cout << "Piece: " << piece.name << "\n";
+			if(!piece.help.empty())
+				std::cout << "Additional controls:\n" << piece.help << "\n\n";
 
 			run_piece(piece.load_name);
 		}
@@ -322,11 +325,15 @@ void Tour::run_specific()
 			});
 
 			std::cout << "Select Piece:\n";
-			const Piece* piece = menu.dynamic_menu(pieces, [](const Piece* piece)
+			const Piece& piece(*menu.dynamic_menu(pieces, [](const Piece* piece)
 			{
 				return piece->name;
-			});
-			run_piece(piece->load_name);
+			}));
+
+			std::cout << "Piece: " << piece.name << "\n";
+			if(!piece.help.empty())
+				std::cout << "Additional controls:\n" << piece.help << "\n\n";
+			run_piece(piece.load_name);
 		}
 		break;
 	case 3:
